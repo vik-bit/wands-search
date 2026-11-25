@@ -10,7 +10,7 @@ requires-python = ">=3.10"
 dependencies = ["numpy", "pandas", "scipy"]
 
 [project.optional-dependencies]
-models = ["fastembed>=0.4", "lightgbm>=4.0"]
+models = ["fastembed>=0.4", "lightgbm>=4.0", "scikit-learn"]
 ann = ["vecdex @ git+https://github.com/vik-bit/vecdex"]
 demo = ["streamlit"]
 dev = ["pytest"]
