@@ -1,0 +1,19 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.10", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      # vecdex (C++ HNSW) builds from source with the runner's compiler and CMake
+      - name: Install
+        run: pip install -e ".[dev,ann]"
+      # metrics vs hand-computed values, paired stats, data loading on a tiny fixture,
+      # BM25 weights by hand, fusion, exact search vs brute force, vecdex vs exact, LLM parsing
+      - run: pytest -q
