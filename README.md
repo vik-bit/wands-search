@@ -161,7 +161,7 @@ slightly. I did not trace it further.
   does not recognise, but of the 26 real spelling changes over all 480 queries, 10 alter a brand or
   product-line name, 1 is plainly wrong ("shirt head" → "shirthead"), and 15 fix a real typo or format:
   "serta kleinmon" → "telsey kleinmon" (dev NDCG 0.94 → 0.49), "regner power loom red" → "regal"
-  (1.00 → 0.82), "orren ellis" → "Oren Ellis" (Orren Ellis is a Wayfair house brand),
+  (1.00 → 0.82), "orren ellis" → "Oren Ellis" (a brand name, not a typo),
   "mahone porch rocking chair" → "mahogany". In a catalogue full of invented product names,
   "unfamiliar word" usually means "brand", not "typo".
 - **Rewrites lose the customer's words.** "desk for kids" → "desk suitable for children" (0.65 → 0.22):

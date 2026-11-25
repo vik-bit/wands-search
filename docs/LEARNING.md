@@ -8,7 +8,7 @@ in a file under `results/`; when this file and a result file disagree, the resul
 ## 1. The problem, in Wayfair's terms
 
 A customer types a short query ("tall buffet cabinet", "nectar queen mattress"). The search
-system must pick, out of ~43k products in this dataset (tens of millions at Wayfair), the few
+system must pick, out of ~43k products in this dataset (far more in a real catalogue), the few
 dozen to show, in order. Two stages are standard:
 
 1. **Candidate generation (recall).** Cheap methods (an inverted index for BM25, an ANN index for
@@ -242,7 +242,7 @@ cached. Each variant changes only the query side; the first stage is unchanged.
 
 | variant | test Δ NDCG@10 | why |
 |---|---|---|
-| spelling correction | +0.001 (n.s.) | Only 5 test queries change. It fixes real typos ("foutains" → "fountains", +0.18) but "corrects" brand names. Of the 26 real changes over 480 queries, 10 alter a brand or product-line name ("serta kleinmon" → "telsey kleinmon": 0.94 → 0.49; "orren ellis", a Wayfair house brand, → "Oren Ellis") |
+| spelling correction | +0.001 (n.s.) | Only 5 test queries change. It fixes real typos ("foutains" → "fountains", +0.18) but "corrects" brand names. Of the 26 real changes over 480 queries, 10 alter a brand or product-line name ("serta kleinmon" → "telsey kleinmon": 0.94 → 0.49; "orren ellis", a brand name, → "Oren Ellis") |
 | rewrite instead of query | −0.010 (p = 0.059) | Rewrites swap the customer's words for "nicer" ones the catalogue doesn't use: "desk for kids" → "desk suitable for children" (0.65 → 0.22) |
 | original + rewrite (fused) | −0.005 (n.s.) | Expansion is safer than replacement, but still not a gain |
 | attribute boost | 0 | Every boost weight > 0 made dev worse, so dev picked 0 |
