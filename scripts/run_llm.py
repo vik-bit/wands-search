@@ -39,6 +39,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--backend", required=True, choices=("groq", "ollama", "cache"))
     ap.add_argument("--model", required=True)
+    ap.add_argument("--generate-only", action="store_true",
+                    help="only call the LLM and fill the cache (needs no models or vecdex)")
     args = ap.parse_args()
     tag = re.sub(r"[^A-Za-z0-9._-]", "_", args.model)
     cache_path = ROOT / "results" / "llm" / f"{tag}.jsonl"
@@ -47,7 +49,9 @@ def main():
     queries = data.load_queries(RAW)
     qrels = data.load_qrels(RAW)
     split = data.load_split(SPLIT)
-    qtext = dict(zip(queries.query_id, queries["query"]))
+    # Only dev and test queries need LLM output: nothing here is trained, and the one tuned value
+    # (beta) is chosen on dev. This halves the calls on a CPU-only model.
+    qtext = {q: t for q, t in zip(queries.query_id, queries["query"]) if q in set(split["dev"] + split["test"])}
     if args.backend == "cache":
         recs = [json.loads(line) for line in cache_path.read_text(encoding="utf-8").splitlines()]
         llm = {r["query_id"]: {**parse(r["raw"], r["query"]), "seconds": r["seconds"]} for r in recs}
@@ -56,6 +60,9 @@ def main():
             raise SystemExit(f"{len(missing)} queries missing from {cache_path}")
     else:
         llm = run_all(qtext, args.backend, args.model, cache_path, sleep=2.0 if args.backend == "groq" else 0)
+        if args.generate_only:
+            print(f"cached {len(llm)} queries in {cache_path}")
+            return
 
     pids = products.product_id.to_numpy()
     with open(CACHE / "bm25_fields.pkl", "rb") as fh:

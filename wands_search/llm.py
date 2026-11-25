@@ -33,7 +33,7 @@ Query: {query}"""
 KEYS = ("corrected", "product_type", "color", "material", "size", "style", "rewrite")
 
 
-def _post(url: str, payload: dict, headers: dict, timeout: float = 120) -> dict:
+def _post(url: str, payload: dict, headers: dict, timeout: float = 600) -> dict:
     req = urllib.request.Request(url, data=json.dumps(payload).encode(), method="POST",
                                  headers={"Content-Type": "application/json", **headers})
     with urllib.request.urlopen(req, timeout=timeout) as r:
@@ -50,8 +50,8 @@ def call(query: str, backend: str, model: str) -> str:
                    "User-Agent": "wands-search-study"})
         return r["choices"][0]["message"]["content"]
     if backend == "ollama":
-        body = {"model": model, "prompt": prompt, "format": "json", "stream": False,
-                "options": {"temperature": 0, "seed": 0}}
+        body = {"model": model, "prompt": prompt, "format": "json", "stream": False, "keep_alive": "30m",
+                "options": {"temperature": 0, "seed": 0, "num_predict": 200}}
         return _post("http://localhost:11434/api/generate", body, {})["response"]
     raise ValueError(backend)
 
