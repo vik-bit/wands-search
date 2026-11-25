@@ -2,7 +2,9 @@
 
 Scores every (query, candidate) pair in the chosen hybrid run's top 100 once and caches them
 (data/cache/ce_<model>.json; LambdaMART reuses them as a feature). The rerank depth is chosen on
-dev. Usage:  python scripts/run_rerank.py [model] [--test-only]
+dev. Usage:  python scripts/run_rerank.py [model] [--dev-test] [--max-depth=N]
+  --dev-test     score only dev and test queries (for a slower model)
+  --max-depth=N  score only the top N candidates (depths above N are not tried)
 """
 from __future__ import annotations
 
@@ -22,7 +24,8 @@ DEPTHS = (10, 20, 50, 100)
 
 def main():
     model = next((a for a in sys.argv[1:] if not a.startswith("--")), MODEL)
-    test_only = "--test-only" in sys.argv
+    dev_test = "--dev-test" in sys.argv
+    max_depth = next((int(a.split("=")[1]) for a in sys.argv if a.startswith("--max-depth=")), 100)
     tag = model.split("/")[-1]
     products = data.load_products(RAW).set_index("product_id")
     queries = data.load_queries(RAW)
@@ -38,13 +41,13 @@ def main():
     cache_file = CACHE / f"ce_{tag}.json"
     cache = json.loads(cache_file.read_text()) if cache_file.exists() else {}
     ce = CrossEncoder(model)
-    todo = split["test"] if test_only else sorted(base)
+    todo = sorted(split["dev"] + split["test"]) if dev_test else sorted(base)
     seconds = {}
     for i, q in enumerate(todo):
         if str(q) in cache:
             continue
         t0 = time.perf_counter()
-        cache[str(q)] = ce.score(qtext[q], [text[p] for p in base[q]])
+        cache[str(q)] = ce.score(qtext[q], [text[p] for p in base[q][:max_depth]])
         seconds[q] = time.perf_counter() - t0
         if i % 50 == 0:
             print(i, f"{seconds[q]:.2f}s", flush=True)
@@ -52,18 +55,15 @@ def main():
     cache_file.write_text(json.dumps(cache))
     scores = {int(q): s for q, s in cache.items()}
 
-    log = {"model": model, "base": base_name, "dev": {}}
-    if not test_only:
-        for d in DEPTHS:
-            run = {q: rerank(base[q], scores[q], d) for q in split["dev"]}
-            log["dev"][d] = float(np.nanmean([metrics.ndcg_at_k(run[q], qrels[q]) for q in split["dev"]]))
-        depth = max(log["dev"], key=log["dev"].get)
-    else:
-        depth = json.loads((ROOT / "results" / "rerank_MiniLM.json").read_text())["chosen_depth"]
+    log = {"model": model, "base": base_name, "max_depth_scored": max_depth, "dev": {}}
+    for d in [d for d in DEPTHS if d <= max_depth]:
+        run = {q: rerank(base[q], scores[q], d) for q in split["dev"]}
+        log["dev"][d] = float(np.nanmean([metrics.ndcg_at_k(run[q], qrels[q]) for q in split["dev"]]))
+    depth = max(log["dev"], key=log["dev"].get)
     log["chosen_depth"] = depth
     if seconds:
         s = np.array(list(seconds.values()))
-        log["seconds_per_query_top100"] = {"p50": float(np.median(s)), "p95": float(np.quantile(s, 0.95))}
+        log[f"seconds_per_query_top{max_depth}"] = {"p50": float(np.median(s)), "p95": float(np.quantile(s, 0.95))}
     run = {q: rerank(base[q], scores[q], depth) for q in scores}
     save_run(f"rerank_{tag}", run)
     out = ROOT / "results" / ("rerank_MiniLM.json" if tag == MODEL.split("/")[-1] else f"rerank_{tag}.json")
