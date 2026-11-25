@@ -1,0 +1,262 @@
+{
+ "grid": [
+  0.0,
+  0.1,
+  0.25,
+  0.5,
+  1.0,
+  2.0,
+  3.0,
+  5.0
+ ],
+ "configs": [
+  {
+   "stem": true,
+   "k1": 0.6,
+   "b": 0.3,
+   "weights": {
+    "name": 3.0,
+    "cls": 1.0,
+    "hierarchy": 1.0,
+    "attrs": 1.0,
+    "description": 1.0
+   },
+   "dev_ndcg10": 0.7828374669183096
+  },
+  {
+   "stem": true,
+   "k1": 0.6,
+   "b": 0.75,
+   "weights": {
+    "name": 3.0,
+    "cls": 1.0,
+    "hierarchy": 1.0,
+    "attrs": 1.0,
+    "description": 2.0
+   },
+   "dev_ndcg10": 0.788749758531552
+  },
+  {
+   "stem": true,
+   "k1": 0.6,
+   "b": 1.0,
+   "weights": {
+    "name": 3.0,
+    "cls": 1.0,
+    "hierarchy": 1.0,
+    "attrs": 1.0,
+    "description": 1.0
+   },
+   "dev_ndcg10": 0.7853826847544582
+  },
+  {
+   "stem": true,
+   "k1": 1.2,
+   "b": 0.3,
+   "weights": {
+    "name": 3.0,
+    "cls": 1.0,
+    "hierarchy": 1.0,
+    "attrs": 1.0,
+    "description": 1.0
+   },
+   "dev_ndcg10": 0.7807220942771756
+  },
+  {
+   "stem": true,
+   "k1": 1.2,
+   "b": 0.75,
+   "weights": {
+    "name": 3.0,
+    "cls": 1.0,
+    "hierarchy": 0.5,
+    "attrs": 1.0,
+    "description": 2.0
+   },
+   "dev_ndcg10": 0.7848344500868126
+  },
+  {
+   "stem": true,
+   "k1": 1.2,
+   "b": 1.0,
+   "weights": {
+    "name": 5.0,
+    "cls": 1.0,
+    "hierarchy": 1.0,
+    "attrs": 1.0,
+    "description": 2.0
+   },
+   "dev_ndcg10": 0.7714937707977428
+  },
+  {
+   "stem": true,
+   "k1": 2.0,
+   "b": 0.3,
+   "weights": {
+    "name": 3.0,
+    "cls": 0.5,
+    "hierarchy": 1.0,
+    "attrs": 1.0,
+    "description": 1.0
+   },
+   "dev_ndcg10": 0.7702356839901251
+  },
+  {
+   "stem": true,
+   "k1": 2.0,
+   "b": 0.75,
+   "weights": {
+    "name": 3.0,
+    "cls": 0.25,
+    "hierarchy": 1.0,
+    "attrs": 1.0,
+    "description": 1.0
+   },
+   "dev_ndcg10": 0.7731040071622973
+  },
+  {
+   "stem": true,
+   "k1": 2.0,
+   "b": 1.0,
+   "weights": {
+    "name": 3.0,
+    "cls": 0.5,
+    "hierarchy": 1.0,
+    "attrs": 1.0,
+    "description": 1.0
+   },
+   "dev_ndcg10": 0.7549184547375276
+  },
+  {
+   "stem": false,
+   "k1": 0.6,
+   "b": 0.3,
+   "weights": {
+    "name": 3.0,
+    "cls": 0.5,
+    "hierarchy": 1.0,
+    "attrs": 0.25,
+    "description": 1.0
+   },
+   "dev_ndcg10": 0.7213773225141988
+  },
+  {
+   "stem": false,
+   "k1": 0.6,
+   "b": 0.75,
+   "weights": {
+    "name": 3.0,
+    "cls": 1.0,
+    "hierarchy": 0.1,
+    "attrs": 0.5,
+    "description": 2.0
+   },
+   "dev_ndcg10": 0.721134224414597
+  },
+  {
+   "stem": false,
+   "k1": 0.6,
+   "b": 1.0,
+   "weights": {
+    "name": 3.0,
+    "cls": 1.0,
+    "hierarchy": 0.5,
+    "attrs": 0.5,
+    "description": 1.0
+   },
+   "dev_ndcg10": 0.7213738658048108
+  },
+  {
+   "stem": false,
+   "k1": 1.2,
+   "b": 0.3,
+   "weights": {
+    "name": 3.0,
+    "cls": 1.0,
+    "hierarchy": 0.5,
+    "attrs": 0.5,
+    "description": 1.0
+   },
+   "dev_ndcg10": 0.7218627981790279
+  },
+  {
+   "stem": false,
+   "k1": 1.2,
+   "b": 0.75,
+   "weights": {
+    "name": 3.0,
+    "cls": 1.0,
+    "hierarchy": 1.0,
+    "attrs": 0.25,
+    "description": 1.0
+   },
+   "dev_ndcg10": 0.7158434837114281
+  },
+  {
+   "stem": false,
+   "k1": 1.2,
+   "b": 1.0,
+   "weights": {
+    "name": 5.0,
+    "cls": 0.25,
+    "hierarchy": 1.0,
+    "attrs": 1.0,
+    "description": 2.0
+   },
+   "dev_ndcg10": 0.708594057098677
+  },
+  {
+   "stem": false,
+   "k1": 2.0,
+   "b": 0.3,
+   "weights": {
+    "name": 3.0,
+    "cls": 0.5,
+    "hierarchy": 1.0,
+    "attrs": 0.5,
+    "description": 1.0
+   },
+   "dev_ndcg10": 0.7216304933344347
+  },
+  {
+   "stem": false,
+   "k1": 2.0,
+   "b": 0.75,
+   "weights": {
+    "name": 5.0,
+    "cls": 1.0,
+    "hierarchy": 0.5,
+    "attrs": 1.0,
+    "description": 2.0
+   },
+   "dev_ndcg10": 0.7148208865514055
+  },
+  {
+   "stem": false,
+   "k1": 2.0,
+   "b": 1.0,
+   "weights": {
+    "name": 5.0,
+    "cls": 0.25,
+    "hierarchy": 1.0,
+    "attrs": 1.0,
+    "description": 2.0
+   },
+   "dev_ndcg10": 0.7012394823100777
+  }
+ ],
+ "bm25_concat_dev_ndcg10": 0.7487340114217668,
+ "chosen": {
+  "stem": true,
+  "k1": 0.6,
+  "b": 0.75,
+  "weights": {
+   "name": 3.0,
+   "cls": 1.0,
+   "hierarchy": 1.0,
+   "attrs": 1.0,
+   "description": 2.0
+  },
+  "dev_ndcg10": 0.788749758531552
+ }
+}

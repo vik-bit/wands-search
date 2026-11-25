@@ -1,0 +1,34 @@
+{
+ "model": "BAAI/bge-small-en-v1.5",
+ "dim": 384,
+ "n_products": 42994,
+ "M": 16,
+ "ef_construction": 200,
+ "build_seconds": 7.8,
+ "by_ef": [
+  {
+   "ef": 100,
+   "overlap@10": 0.9702083333333333,
+   "overlap@100": 0.9325,
+   "test_ndcg10_vecdex": 0.7436495847897044,
+   "test_ndcg10_exact": 0.7454419739300419,
+   "queries_top10_identical": 416
+  },
+  {
+   "ef": 200,
+   "overlap@10": 0.98375,
+   "overlap@100": 0.9695416666666666,
+   "test_ndcg10_vecdex": 0.7431007996684295,
+   "test_ndcg10_exact": 0.7454419739300419,
+   "queries_top10_identical": 442
+  },
+  {
+   "ef": 400,
+   "overlap@10": 0.9914583333333333,
+   "overlap@100": 0.9851458333333334,
+   "test_ndcg10_vecdex": 0.7437061570447019,
+   "test_ndcg10_exact": 0.7454419739300419,
+   "queries_top10_identical": 457
+  }
+ ]
+}
