@@ -1,0 +1,5 @@
+product_id	product_name	product_class	category hierarchy	product_description	product_features	rating_count	average_rating	review_count
+0	white oak coffee table	Coffee & Cocktail Tables	Furniture / Living Room Furniture / Coffee Tables	a round coffee table in solid oak .	color : white|topmaterial : solid oak|caltb117-2013compliant : no|overallwidth-sidetoside:40	12.0	4.5	10.0
+1	velvet accent chair	Accent Chairs	Furniture / Living Room Furniture / Chairs		upholsterymaterial : velvet|color : green			
+2	black metal bed frame	Beds		a sturdy metal bed .	framematerial : metal|color : black|dsprimaryproductstyle : industrial	3.0	4.0	2.0
+3	round dining table		Furniture / Kitchen & Dining	oak dining table seats four .	shape : round|tabletopmaterial : oak	0.0	0.0	0.0

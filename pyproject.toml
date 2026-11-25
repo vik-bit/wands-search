@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wands-search"
+version = "0.1.0"
+description = "A product search relevance study on Wayfair's public WANDS dataset: BM25, dense retrieval, fusion, reranking and LambdaMART, with graded-relevance evaluation"
+requires-python = ">=3.10"
+dependencies = ["numpy", "pandas", "scipy"]
+
+[project.optional-dependencies]
+models = ["fastembed>=0.4", "lightgbm>=4.0"]
+ann = ["vecdex @ git+https://github.com/vik-bit/vecdex"]
+demo = ["streamlit"]
+dev = ["pytest"]
+
+[tool.setuptools]
+packages = ["wands_search"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
