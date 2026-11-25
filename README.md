@@ -8,6 +8,7 @@ fusion, a cross-encoder reranker, LambdaMART, and LLM query understanding. Every
 scored on the same 144 held-out queries with graded relevance, 95% bootstrap confidence
 intervals and paired significance tests.**
 
+[![CI](https://github.com/vik-bit/wands-search/actions/workflows/ci.yml/badge.svg)](https://github.com/vik-bit/wands-search/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
 ![LightGBM](https://img.shields.io/badge/LightGBM-LambdaMART-2c8ebb)
 ![Compute](https://img.shields.io/badge/compute-laptop%20CPU%20%2B%20free%20Colab%20T4-lightgrey)
