@@ -1,0 +1,314 @@
+{
+ "base_run": "hybrid_weighted",
+ "variants": {
+  "lambdamart": {
+   "groups": [
+    "bm25",
+    "dense",
+    "rank",
+    "coverage",
+    "class",
+    "reviews",
+    "query"
+   ],
+   "config": {
+    "unjudged": "zero",
+    "num_leaves": 7,
+    "min_child_samples": 20
+   },
+   "trees": 625,
+   "dev_ndcg10": 0.8198867286200343,
+   "search": [
+    {
+     "unjudged": "zero",
+     "num_leaves": 7,
+     "min_child_samples": 20,
+     "trees": 625,
+     "dev_ndcg10": 0.8198867286200343
+    },
+    {
+     "unjudged": "zero",
+     "num_leaves": 7,
+     "min_child_samples": 100,
+     "trees": 225,
+     "dev_ndcg10": 0.8174832055157717
+    },
+    {
+     "unjudged": "zero",
+     "num_leaves": 15,
+     "min_child_samples": 20,
+     "trees": 225,
+     "dev_ndcg10": 0.8106039501990262
+    },
+    {
+     "unjudged": "zero",
+     "num_leaves": 15,
+     "min_child_samples": 100,
+     "trees": 250,
+     "dev_ndcg10": 0.812887612410437
+    },
+    {
+     "unjudged": "zero",
+     "num_leaves": 31,
+     "min_child_samples": 20,
+     "trees": 125,
+     "dev_ndcg10": 0.8075608423469177
+    },
+    {
+     "unjudged": "zero",
+     "num_leaves": 31,
+     "min_child_samples": 100,
+     "trees": 275,
+     "dev_ndcg10": 0.8070219706268303
+    },
+    {
+     "unjudged": "drop",
+     "num_leaves": 7,
+     "min_child_samples": 20,
+     "trees": 175,
+     "dev_ndcg10": 0.7951190495663408
+    },
+    {
+     "unjudged": "drop",
+     "num_leaves": 7,
+     "min_child_samples": 100,
+     "trees": 200,
+     "dev_ndcg10": 0.7847423810063489
+    },
+    {
+     "unjudged": "drop",
+     "num_leaves": 15,
+     "min_child_samples": 20,
+     "trees": 125,
+     "dev_ndcg10": 0.7754738843649575
+    },
+    {
+     "unjudged": "drop",
+     "num_leaves": 15,
+     "min_child_samples": 100,
+     "trees": 125,
+     "dev_ndcg10": 0.7820307559255092
+    },
+    {
+     "unjudged": "drop",
+     "num_leaves": 31,
+     "min_child_samples": 20,
+     "trees": 1300,
+     "dev_ndcg10": 0.7672762703264541
+    },
+    {
+     "unjudged": "drop",
+     "num_leaves": 31,
+     "min_child_samples": 100,
+     "trees": 925,
+     "dev_ndcg10": 0.7746436164609922
+    }
+   ],
+   "test_ndcg10": 0.8052084821630441
+  },
+  "pointwise": {
+   "groups": [
+    "bm25",
+    "dense",
+    "rank",
+    "coverage",
+    "class",
+    "reviews",
+    "query"
+   ],
+   "config": {
+    "unjudged": "zero",
+    "num_leaves": 15,
+    "min_child_samples": 20
+   },
+   "trees": 75,
+   "dev_ndcg10": 0.8249514518863582,
+   "search": [
+    {
+     "unjudged": "zero",
+     "num_leaves": 7,
+     "min_child_samples": 20,
+     "trees": 125,
+     "dev_ndcg10": 0.8144597546243423
+    },
+    {
+     "unjudged": "zero",
+     "num_leaves": 7,
+     "min_child_samples": 100,
+     "trees": 150,
+     "dev_ndcg10": 0.8144461339275347
+    },
+    {
+     "unjudged": "zero",
+     "num_leaves": 15,
+     "min_child_samples": 20,
+     "trees": 75,
+     "dev_ndcg10": 0.8249514518863582
+    },
+    {
+     "unjudged": "zero",
+     "num_leaves": 15,
+     "min_child_samples": 100,
+     "trees": 25,
+     "dev_ndcg10": 0.8162294498514746
+    },
+    {
+     "unjudged": "zero",
+     "num_leaves": 31,
+     "min_child_samples": 20,
+     "trees": 75,
+     "dev_ndcg10": 0.8115319431335025
+    },
+    {
+     "unjudged": "zero",
+     "num_leaves": 31,
+     "min_child_samples": 100,
+     "trees": 225,
+     "dev_ndcg10": 0.805013836078928
+    }
+   ],
+   "test_ndcg10": 0.8078566768305819
+  },
+  "lambdamart_ce": {
+   "groups": [
+    "bm25",
+    "dense",
+    "rank",
+    "coverage",
+    "class",
+    "reviews",
+    "query",
+    "ce"
+   ],
+   "trees": 600,
+   "dev_ndcg10": 0.8193815720029939,
+   "test_ndcg10": 0.8015282487115083
+  },
+  "lambdamart_oracle_class": {
+   "groups": [
+    "bm25",
+    "dense",
+    "rank",
+    "coverage",
+    "class",
+    "reviews",
+    "query",
+    "oracle"
+   ],
+   "trees": 450,
+   "dev_ndcg10": 0.8365778563508003,
+   "test_ndcg10": 0.81473495897671
+  },
+  "ablate_minus_bm25": {
+   "groups": [
+    "dense",
+    "rank",
+    "coverage",
+    "class",
+    "reviews",
+    "query"
+   ],
+   "trees": 325,
+   "dev_ndcg10": 0.8167653247449861,
+   "test_ndcg10": 0.8157453588389361
+  },
+  "ablate_minus_dense": {
+   "groups": [
+    "bm25",
+    "rank",
+    "coverage",
+    "class",
+    "reviews",
+    "query"
+   ],
+   "trees": 200,
+   "dev_ndcg10": 0.8214689367917235,
+   "test_ndcg10": 0.8118527132697643
+  },
+  "ablate_minus_rank": {
+   "groups": [
+    "bm25",
+    "dense",
+    "coverage",
+    "class",
+    "reviews",
+    "query"
+   ],
+   "trees": 300,
+   "dev_ndcg10": 0.8199730461533488,
+   "test_ndcg10": 0.8101071723499883
+  },
+  "ablate_minus_coverage": {
+   "groups": [
+    "bm25",
+    "dense",
+    "rank",
+    "class",
+    "reviews",
+    "query"
+   ],
+   "trees": 175,
+   "dev_ndcg10": 0.8163728963117375,
+   "test_ndcg10": 0.7943554785096264
+  },
+  "ablate_minus_class": {
+   "groups": [
+    "bm25",
+    "dense",
+    "rank",
+    "coverage",
+    "reviews",
+    "query"
+   ],
+   "trees": 250,
+   "dev_ndcg10": 0.8170506785159778,
+   "test_ndcg10": 0.8055963764214943
+  },
+  "ablate_minus_reviews": {
+   "groups": [
+    "bm25",
+    "dense",
+    "rank",
+    "coverage",
+    "class",
+    "query"
+   ],
+   "trees": 25,
+   "dev_ndcg10": 0.8172431728180477,
+   "test_ndcg10": 0.8059396819138333
+  },
+  "ablate_minus_query": {
+   "groups": [
+    "bm25",
+    "dense",
+    "rank",
+    "coverage",
+    "class",
+    "reviews"
+   ],
+   "trees": 25,
+   "dev_ndcg10": 0.8172431728180477,
+   "test_ndcg10": 0.8059396819138333
+  }
+ },
+ "importance_gain": {
+  "hybrid_rank": 0.4147790000032146,
+  "cover_any": 0.10189593222840139,
+  "cover_name": 0.09707374813939185,
+  "dense_cos": 0.07845989791520068,
+  "bm25_name": 0.0673877318323916,
+  "class_vote": 0.05788372143397761,
+  "bm25_hierarchy": 0.03372074245879455,
+  "bm25_total": 0.028500902504523248,
+  "bm25_description": 0.027369373694475563,
+  "bm25_cls": 0.022652976759725742,
+  "bm25_attrs": 0.018394895620894393,
+  "name_len": 0.01727846542855823,
+  "log_reviews": 0.012794585683485536,
+  "log_ratings": 0.010234362921759214,
+  "class_in_query": 0.0055695191103782,
+  "query_len": 0.0031483322769514767,
+  "avg_rating": 0.0027663663366172286,
+  "rating_missing": 8.944565125887797e-05
+ }
+}
