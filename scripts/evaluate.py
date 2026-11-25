@@ -15,9 +15,11 @@ SYSTEMS = ["bm25_concat", "bm25_fields_equal", "bm25_fields", "dense_exact", "de
            "hybrid_rrf", "hybrid_weighted", "rerank_ms-marco-MiniLM-L-6-v2",
            "rerank_bge-reranker-base", "pointwise", "lambdamart", "lambdamart_ce",
            "lambdamart_oracle_class"]
-STEPS = [("bm25_concat", "bm25_fields"), ("bm25_fields", "hybrid_rrf"),
-         ("dense_vecdex", "hybrid_rrf"), ("hybrid_rrf", "rerank_ms-marco-MiniLM-L-6-v2"),
-         ("hybrid_rrf", "lambdamart"), ("pointwise", "lambdamart"),
+# rerank and LTR candidates are the hybrid_weighted top 100 (it won on dev), so they are compared to it
+STEPS = [("bm25_concat", "bm25_fields"), ("bm25_fields_equal", "bm25_fields"),
+         ("bm25_fields", "hybrid_weighted"), ("dense_vecdex", "hybrid_weighted"),
+         ("hybrid_rrf", "hybrid_weighted"), ("hybrid_weighted", "rerank_ms-marco-MiniLM-L-6-v2"),
+         ("hybrid_weighted", "rerank_bge-reranker-base"), ("hybrid_weighted", "lambdamart"), ("pointwise", "lambdamart"),
          ("lambdamart", "lambdamart_ce"), ("rerank_ms-marco-MiniLM-L-6-v2", "lambdamart_ce"),
          ("dense_exact", "dense_vecdex"), ("lambdamart", "lambdamart_oracle_class")]
 
