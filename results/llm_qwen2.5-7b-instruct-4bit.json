@@ -1,0 +1,573 @@
+{
+ "model": "qwen2.5-7b-instruct-4bit",
+ "backend": "cache",
+ "attr_boost_beta": 0.0,
+ "dev_beta": {
+  "0.0": 0.8025490313645052,
+  "0.05": 0.8002426330561084,
+  "0.1": 0.7997719898867176,
+  "0.2": 0.7973512795873337,
+  "0.3": 0.795897951799319,
+  "0.5": 0.7902022212059983
+ },
+ "parse_ok": 240,
+ "n_queries": 240,
+ "seconds_per_query": {
+  "p50": 0.871,
+  "p95": 1.009
+ },
+ "n_changed_all": {
+  "corrected": 9,
+  "rewrite": 100,
+  "attr": 54
+ },
+ "n_changed_test": {
+  "corrected": 5,
+  "rewrite": 59,
+  "attr": 31
+ },
+ "test": {
+  "original": {
+   "ndcg@10": 0.7843439052451956,
+   "recall@50": 0.5289482514424668,
+   "mrr": 0.7189216938066043
+  },
+  "corrected": {
+   "ndcg@10": 0.7848074725826767,
+   "recall@50": 0.5229422454364607,
+   "mrr": 0.718523568408479,
+   "vs_original": {
+    "delta": 0.0004635673374810629,
+    "ci_low": -0.0033210792459297178,
+    "ci_high": 0.0042484650104401165,
+    "p_value": 0.7542245775422458,
+    "wins": 2,
+    "losses": 1,
+    "ties": 140,
+    "n": 143
+   }
+  },
+  "rewrite": {
+   "ndcg@10": 0.7743331244801799,
+   "recall@50": 0.509403842090587,
+   "mrr": 0.7071180140920919,
+   "vs_original": {
+    "delta": -0.010010780765015702,
+    "ci_low": -0.021236158825458724,
+    "ci_high": -0.00023172588314462192,
+    "p_value": 0.059194080591940805,
+    "wins": 14,
+    "losses": 18,
+    "ties": 111,
+    "n": 143
+   }
+  },
+  "orig+rewrite": {
+   "ndcg@10": 0.779819549177726,
+   "recall@50": 0.5237456914360914,
+   "mrr": 0.7018086144076633,
+   "vs_original": {
+    "delta": -0.004524356067469633,
+    "ci_low": -0.014898518943285224,
+    "ci_high": 0.0036187519508022177,
+    "p_value": 0.38776122387761225,
+    "wins": 14,
+    "losses": 13,
+    "ties": 116,
+    "n": 143
+   }
+  },
+  "attr_boost": {
+   "ndcg@10": 0.7843439052451956,
+   "recall@50": 0.5289482514424668,
+   "mrr": 0.7189216938066043,
+   "vs_original": {
+    "delta": 0.0,
+    "ci_low": 0.0,
+    "ci_high": 0.0,
+    "p_value": 1.0,
+    "wins": 0,
+    "losses": 0,
+    "ties": 143,
+    "n": 143
+   }
+  },
+  "attr_filter": {
+   "ndcg@10": 0.74578642607596,
+   "recall@50": 0.5120059276175635,
+   "mrr": 0.711571276162069,
+   "vs_original": {
+    "delta": -0.03855747916923559,
+    "ci_low": -0.06732260285647401,
+    "ci_high": -0.014345113846570189,
+    "p_value": 0.0015998400159984002,
+    "wins": 5,
+    "losses": 13,
+    "ties": 125,
+    "n": 143
+   }
+  }
+ },
+ "examples": {
+  "corrected": [
+   {
+    "query": "regner power loom red",
+    "llm": {
+     "corrected": "regal power loom red",
+     "rewrite": "red power loom",
+     "color": "red",
+     "material": null,
+     "size": null,
+     "style": "power loom",
+     "product_type": null
+    },
+    "ndcg_original": 1.0,
+    "ndcg_variant": 0.8196104814592204
+   },
+   {
+    "query": "foutains with brick look",
+    "llm": {
+     "corrected": "fountains with brick look",
+     "rewrite": "brick look fountains",
+     "color": null,
+     "material": "brick",
+     "size": null,
+     "style": null,
+     "product_type": "fountains"
+    },
+    "ndcg_original": 0.23644675167972717,
+    "ndcg_variant": 0.4168721760259097
+   },
+   {
+    "query": "pedistole sink",
+    "llm": {
+     "corrected": "pedestal sink",
+     "rewrite": "pedestal sink",
+     "color": null,
+     "material": null,
+     "size": null,
+     "style": "pedestal",
+     "product_type": "sink"
+    },
+    "ndcg_original": 0.0,
+    "ndcg_variant": 0.06625422345438903
+   }
+  ],
+  "rewrite": [
+   {
+    "query": "desk for kids",
+    "llm": {
+     "corrected": "desk for kids",
+     "rewrite": "desk suitable for children",
+     "color": null,
+     "material": null,
+     "size": null,
+     "style": null,
+     "product_type": "desk"
+    },
+    "ndcg_original": 0.6470538417566039,
+    "ndcg_variant": 0.22400556151517553
+   },
+   {
+    "query": "fold in half table",
+    "llm": {
+     "corrected": "fold in half table",
+     "rewrite": "foldable half-size table",
+     "color": null,
+     "material": null,
+     "size": null,
+     "style": null,
+     "product_type": "table"
+    },
+    "ndcg_original": 1.0,
+    "ndcg_variant": 0.7215194105726964
+   },
+   {
+    "query": "flour and sugar containers",
+    "llm": {
+     "corrected": "flour and sugar containers",
+     "rewrite": "flour and sugar storage containers",
+     "color": null,
+     "material": null,
+     "size": null,
+     "style": null,
+     "product_type": null
+    },
+    "ndcg_original": 0.804309119437212,
+    "ndcg_variant": 0.5753404647698093
+   },
+   {
+    "query": "70s inspired furniture",
+    "llm": {
+     "corrected": "70s inspired furniture",
+     "rewrite": "70s style furniture",
+     "color": null,
+     "material": null,
+     "size": null,
+     "style": "70s inspired",
+     "product_type": null
+    },
+    "ndcg_original": 0.32604409431795955,
+    "ndcg_variant": 0.10241712375929543
+   },
+   {
+    "query": "foutains with brick look",
+    "llm": {
+     "corrected": "fountains with brick look",
+     "rewrite": "brick look fountains",
+     "color": null,
+     "material": "brick",
+     "size": null,
+     "style": null,
+     "product_type": "fountains"
+    },
+    "ndcg_original": 0.23644675167972717,
+    "ndcg_variant": 0.5058602992467927
+   },
+   {
+    "query": "sugar canister",
+    "llm": {
+     "corrected": "sugar canister",
+     "rewrite": "sugar storage canister",
+     "color": null,
+     "material": null,
+     "size": null,
+     "style": null,
+     "product_type": "canister"
+    },
+    "ndcg_original": 0.782685071203362,
+    "ndcg_variant": 0.8769071472672197
+   },
+   {
+    "query": "bar stool 24 inches height",
+    "llm": {
+     "corrected": "bar stool 24 inches height",
+     "rewrite": "24 inch bar stool",
+     "color": null,
+     "material": null,
+     "size": "24 inches",
+     "style": null,
+     "product_type": "bar stool"
+    },
+    "ndcg_original": 0.685917526215314,
+    "ndcg_variant": 0.7556776554059493
+   },
+   {
+    "query": "pedistole sink",
+    "llm": {
+     "corrected": "pedestal sink",
+     "rewrite": "pedestal sink",
+     "color": null,
+     "material": null,
+     "size": null,
+     "style": "pedestal",
+     "product_type": "sink"
+    },
+    "ndcg_original": 0.0,
+    "ndcg_variant": 0.06625422345438903
+   }
+  ],
+  "orig+rewrite": [
+   {
+    "query": "desk for kids",
+    "llm": {
+     "corrected": "desk for kids",
+     "rewrite": "desk suitable for children",
+     "color": null,
+     "material": null,
+     "size": null,
+     "style": null,
+     "product_type": "desk"
+    },
+    "ndcg_original": 0.6470538417566039,
+    "ndcg_variant": 0.13568544539116628
+   },
+   {
+    "query": "70s inspired furniture",
+    "llm": {
+     "corrected": "70s inspired furniture",
+     "rewrite": "70s style furniture",
+     "color": null,
+     "material": null,
+     "size": null,
+     "style": "70s inspired",
+     "product_type": null
+    },
+    "ndcg_original": 0.32604409431795955,
+    "ndcg_variant": 0.05502294157452004
+   },
+   {
+    "query": "regner power loom red",
+    "llm": {
+     "corrected": "regal power loom red",
+     "rewrite": "red power loom",
+     "color": "red",
+     "material": null,
+     "size": null,
+     "style": "power loom",
+     "product_type": null
+    },
+    "ndcg_original": 1.0,
+    "ndcg_variant": 0.8196104814592204
+   },
+   {
+    "query": "kohen 5 drawer dresser",
+    "llm": {
+     "corrected": "kohen 5 drawer dresser",
+     "rewrite": "5 drawer dresser",
+     "color": null,
+     "material": null,
+     "size": null,
+     "style": null,
+     "product_type": "dresser"
+    },
+    "ndcg_original": 1.0,
+    "ndcg_variant": 0.8196104814592204
+   },
+   {
+    "query": "foutains with brick look",
+    "llm": {
+     "corrected": "fountains with brick look",
+     "rewrite": "brick look fountains",
+     "color": null,
+     "material": "brick",
+     "size": null,
+     "style": null,
+     "product_type": "fountains"
+    },
+    "ndcg_original": 0.23644675167972717,
+    "ndcg_variant": 0.3928593337198727
+   },
+   {
+    "query": "cake cutlery",
+    "llm": {
+     "corrected": "cake cutlery",
+     "rewrite": "cake serving utensils",
+     "color": null,
+     "material": null,
+     "size": null,
+     "style": null,
+     "product_type": null
+    },
+    "ndcg_original": 0.835780413693672,
+    "ndcg_variant": 0.9266360779006401
+   },
+   {
+    "query": "love seat wide faux leather tuxedo arm sofa",
+    "llm": {
+     "corrected": "love seat wide faux leather tuxedo arm sofa",
+     "rewrite": "wide tuxedo arm faux leather love seat",
+     "color": null,
+     "material": "faux leather",
+     "size": "wide",
+     "style": "tuxedo arm",
+     "product_type": "sofa"
+    },
+    "ndcg_original": 0.7288087845360931,
+    "ndcg_variant": 0.8005212068897687
+   },
+   {
+    "query": "pedistole sink",
+    "llm": {
+     "corrected": "pedestal sink",
+     "rewrite": "pedestal sink",
+     "color": null,
+     "material": null,
+     "size": null,
+     "style": "pedestal",
+     "product_type": "sink"
+    },
+    "ndcg_original": 0.0,
+    "ndcg_variant": 0.06625422345438903
+   }
+  ],
+  "attr_filter": [
+   {
+    "query": "porcelain loaf pan",
+    "llm": {
+     "corrected": "porcelain loaf pan",
+     "rewrite": "porcelain loaf pan",
+     "color": null,
+     "material": "porcelain",
+     "size": null,
+     "style": null,
+     "product_type": "pan"
+    },
+    "ndcg_original": 1.0,
+    "ndcg_variant": 0.0
+   },
+   {
+    "query": "gray leather cocktail table",
+    "llm": {
+     "corrected": "gray leather cocktail table",
+     "rewrite": "gray leather cocktail table",
+     "color": "gray",
+     "material": "leather",
+     "size": null,
+     "style": null,
+     "product_type": "cocktail table"
+    },
+    "ndcg_original": 0.9266360779006401,
+    "ndcg_variant": 0.0
+   },
+   {
+    "query": "olive green console table",
+    "llm": {
+     "corrected": "olive green console table",
+     "rewrite": "olive green console table",
+     "color": "olive green",
+     "material": null,
+     "size": null,
+     "style": null,
+     "product_type": "console table"
+    },
+    "ndcg_original": 0.9216017310213247,
+    "ndcg_variant": 0.0
+   },
+   {
+    "query": "rattan truck",
+    "llm": {
+     "corrected": "rattan truck",
+     "rewrite": "rattan truck",
+     "color": null,
+     "material": "rattan",
+     "size": null,
+     "style": null,
+     "product_type": null
+    },
+    "ndcg_original": 0.756902106715231,
+    "ndcg_variant": 0.0
+   },
+   {
+    "query": "small woven pouf",
+    "llm": {
+     "corrected": "small woven pouf",
+     "rewrite": "small woven pouf",
+     "color": null,
+     "material": "woven",
+     "size": "small",
+     "style": null,
+     "product_type": "pouf"
+    },
+    "ndcg_original": 0.6304697734785536,
+    "ndcg_variant": 0.7264275878053525
+   },
+   {
+    "query": "ceramic tile sea shell",
+    "llm": {
+     "corrected": "ceramic tile sea shell",
+     "rewrite": "sea shell ceramic tile",
+     "color": null,
+     "material": "ceramic",
+     "size": null,
+     "style": "sea shell",
+     "product_type": null
+    },
+    "ndcg_original": 0.8164099097360071,
+    "ndcg_variant": 0.8565892927517742
+   },
+   {
+    "query": "dark gray dresser",
+    "llm": {
+     "corrected": "dark gray dresser",
+     "rewrite": "dark gray dresser",
+     "color": "dark gray",
+     "material": null,
+     "size": null,
+     "style": null,
+     "product_type": "dresser"
+    },
+    "ndcg_original": 0.7248873686623468,
+    "ndcg_variant": 0.7468659402631216
+   },
+   {
+    "query": "love seat wide faux leather tuxedo arm sofa",
+    "llm": {
+     "corrected": "love seat wide faux leather tuxedo arm sofa",
+     "rewrite": "wide tuxedo arm faux leather love seat",
+     "color": null,
+     "material": "faux leather",
+     "size": "wide",
+     "style": "tuxedo arm",
+     "product_type": "sofa"
+    },
+    "ndcg_original": 0.7288087845360931,
+    "ndcg_variant": 0.7347995957504654
+   }
+  ]
+ },
+ "all_spelling_changes": [
+  {
+   "query_id": 20,
+   "split": "test",
+   "query": "foutains with brick look",
+   "corrected": "fountains with brick look",
+   "ndcg_original": 0.23644675167972717,
+   "ndcg_corrected": 0.4168721760259097
+  },
+  {
+   "query_id": 74,
+   "split": "dev",
+   "query": "serta kleinmon",
+   "corrected": "telsey kleinmon",
+   "ndcg_original": 0.9379462333758279,
+   "ndcg_corrected": 0.4887054967576194
+  },
+  {
+   "query_id": 97,
+   "split": "test",
+   "query": "regner power loom red",
+   "corrected": "regal power loom red",
+   "ndcg_original": 1.0,
+   "ndcg_corrected": 0.8196104814592204
+  },
+  {
+   "query_id": 191,
+   "split": "dev",
+   "query": "biycicle plant stands",
+   "corrected": "bicycle plant stands",
+   "ndcg_original": 1.0,
+   "ndcg_corrected": 1.0
+  },
+  {
+   "query_id": 207,
+   "split": "test",
+   "query": "dull bed with shirt head board",
+   "corrected": "dull bed with shirthead board",
+   "ndcg_original": 0.0,
+   "ndcg_corrected": 0.0
+  },
+  {
+   "query_id": 388,
+   "split": "dev",
+   "query": "outdoor sectional doning",
+   "corrected": "outdoor sectional dining",
+   "ndcg_original": 0.914856882358379,
+   "ndcg_corrected": 0.7183424120903081
+  },
+  {
+   "query_id": 401,
+   "split": "dev",
+   "query": "glass lsmp shades",
+   "corrected": "glass lamp shades",
+   "ndcg_original": 0.47151726676033245,
+   "ndcg_corrected": 0.6929852696575347
+  },
+  {
+   "query_id": 485,
+   "split": "test",
+   "query": "pedistole sink",
+   "corrected": "pedestal sink",
+   "ndcg_original": 0.0,
+   "ndcg_corrected": 0.06625422345438903
+  },
+  {
+   "query_id": 486,
+   "split": "test",
+   "query": "54 in bench cushion",
+   "corrected": "54 inch bench cushion",
+   "ndcg_original": 1.0,
+   "ndcg_corrected": 1.0
+  }
+ ]
+}

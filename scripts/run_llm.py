@@ -123,8 +123,11 @@ def main():
 
     test = split["test"]
     per_q = {k: metrics.evaluate(r, qrels, test) for k, r in runs.items()}
-    changed = {"corrected": [q for q in qtext if llm[q]["corrected"].strip().lower() != qtext[q].strip().lower()],
-               "rewrite": [q for q in qtext if llm[q]["rewrite"].strip().lower() != qtext[q].strip().lower()],
+    def norm(t):  # whitespace / case changes do not count as a change
+        return " ".join(t.lower().split())
+
+    changed = {"corrected": [q for q in qtext if norm(llm[q]["corrected"]) != norm(qtext[q])],
+               "rewrite": [q for q in qtext if norm(llm[q]["rewrite"]) != norm(qtext[q])],
                "attr": [q for q in qtext if attr_words[q]]}
     res = {"model": args.model, "backend": args.backend, "attr_boost_beta": beta, "dev_beta": dev_beta,
            "parse_ok": sum(llm[q]["parse_ok"] for q in qtext), "n_queries": len(qtext),
@@ -148,6 +151,11 @@ def main():
                      "ndcg_original": float(per_q["original"].at[q, "ndcg@10"]),
                      "ndcg_variant": float(per_q[name].at[q, "ndcg@10"])} for q in pick if abs(d[q]) > 1e-9]
     res["examples"] = ex
+    res["all_spelling_changes"] = [{"query_id": int(q), "split": "test" if q in set(test) else "dev",
+                                    "query": qtext[q], "corrected": llm[q]["corrected"],
+                                    "ndcg_original": float(metrics.ndcg_at_k(runs["original"][q], qrels[q])),
+                                    "ndcg_corrected": float(metrics.ndcg_at_k(runs["corrected"][q], qrels[q]))}
+                                   for q in changed["corrected"]]
     for name, r in runs.items():
         save_run(f"llm_{tag}_{name}", r)
     out = ROOT / "results" / f"llm_{tag}.json"
