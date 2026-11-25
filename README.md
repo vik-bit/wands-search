@@ -31,14 +31,15 @@ intervals and paired significance tests.**
 | **Data** | [WANDS](https://github.com/wayfair/WANDS) (Chen et al., ECIR 2022, MIT licence): 42,994 products, 480 real queries, 233,448 human judgements (Exact / Partial / Irrelevant). Queries are split once, at random: 240 train / 96 dev / 144 test ([`splits/`](splits/)). |
 | **Best result** | LambdaMART on the hybrid top 100: **test NDCG@10 0.805** (95% CI 0.762–0.845), against **0.734** for untuned BM25. The gain is **+0.071** (CI +0.040 to +0.102, p < 0.001). |
 | **Biggest single gains** | Tuned field weights in BM25 (+0.035), then adding dense retrieval (+0.015 over tuned BM25), then learning to rank (+0.021, p = 0.061). |
-| **Honest negatives** | **LLM query rewriting hurt** (−0.010), and LLM attribute filters hurt more (−0.039, p = 0.002). Spelling "correction" fixed typos but also changed 10 brand or product-line names. LambdaMART is **no better than a pointwise regressor** on the same features (0.805 vs 0.808). Two off-the-shelf cross-encoders give **no reliable gain**: they hurt on dev and help a little on test, and over the 240 dev + test queries the effect is +0.003 to +0.005 with CIs that include 0. Adding the score as a LambdaMART feature changed nothing. On 43k products, HNSW is **not faster than exact search**. |
+| **Honest negatives** | **LLM query rewriting hurt** (−0.010, p = 0.06), and LLM attribute filters hurt more (−0.039, p = 0.002). Spelling "correction" fixed typos but also changed 10 brand or product-line names. LambdaMART is **no better than a pointwise regressor** on the same features (0.805 vs 0.808). Two off-the-shelf cross-encoders give **no reliable gain**: they hurt on dev and help a little on test, and over the 240 dev + test queries the effect is +0.003 to +0.005 with CIs that include 0. Adding the score as a LambdaMART feature changed nothing. On 43k products, HNSW is **not faster than exact search**. |
 | **Checked** | Metrics against hand-computed examples. vecdex against exact search (98.4% of top-10 results identical, NDCG −0.002). Every tuned value is chosen on dev, never on test. |
 
 ---
 
 ## Results (144 test queries)
 
-Mean with 95% bootstrap CI over queries. NDCG@10 uses graded gains (Exact 2, Partial 1). MAP,
+Mean with 95% bootstrap CI over queries. NDCG@10 uses graded gains (Exact 2, Partial 1) and is
+averaged over 143 queries (one test query has no positive judgement, so its NDCG is undefined). MAP,
 recall@50 and MRR count only Exact as relevant, so they are averaged over the 111 test queries
 that have at least one Exact product. Full table: [`results/test_results.md`](results/test_results.md).
 
@@ -140,12 +141,16 @@ tuned value (the boost weight) is chosen on dev ([`llm_qwen2.5-7b-instruct-4bit.
 
 | variant (test, 144 queries) | NDCG@10 | Δ vs original query (95% CI) | p | better / worse / same |
 |---|---|---|---|---|
-| original query (= weighted hybrid) | 0.784 | — | — | — |
+| original query (= weighted hybrid)¹ | 0.784 | — | — | — |
 | spelling-corrected query | 0.785 | +0.001 (−0.003 to +0.004) | 0.75 | 2 / 1 / 140 |
 | LLM rewrite instead of the query | 0.774 | −0.010 (−0.021 to −0.000) | 0.059 | 14 / 18 / 111 |
 | original + rewrite, fused (RRF) | 0.780 | −0.005 (−0.015 to +0.004) | 0.39 | 14 / 13 / 116 |
 | boost products with the extracted colour / material | 0.784 | 0 (dev chose a boost weight of **0**) | — | — |
 | **filter** to products with the extracted colour / material | 0.746 | **−0.039** (−0.067 to −0.014) | 0.002 | 5 / 13 / 125 |
+
+¹ 0.784 here vs 0.785 in the main table. The script rebuilds the vecdex index, and the most likely
+cause is that a multi-threaded HNSW build is not bit-for-bit repeatable, so a few dense lists differ
+slightly. I did not trace it further.
 
 **Where it helped:** real typos. "foutains with brick look" → "fountains" (NDCG 0.24 → 0.42),
 "glass lsmp shades" → "lamp" (0.47 → 0.69, dev), "pedistole sink" → "pedestal" (0 → 0.07).
@@ -162,11 +167,14 @@ tuned value (the boost weight) is chosen on dev ([`llm_qwen2.5-7b-instruct-4bit.
 - **Rewrites lose the customer's words.** "desk for kids" → "desk suitable for children" (0.65 → 0.22):
   product names say "kids", not "children". "70s inspired furniture" → "70s style furniture"
   (0.33 → 0.10). The rewrite looks more "catalogue-like" to the LLM but matches this catalogue worse.
-- **Hard attribute filters destroy recall.** "gray leather cocktail table" 0.93 → 0, "olive green
-  console table" 0.92 → 0: the colour or material is in the description or worded differently
-  ("grey", "genuine leather") in the attributes, so the right products get filtered out.
-  Extraction also reads colours out of brand names: "Kohler Whitehaven" → white, "Palram Harmony
-  greenhouses" → green.
+- **Hard attribute filters throw away the near misses.** "gray leather cocktail table" went from
+  0.93 to 0, and "olive green console table" from 0.92 to 0. Neither query has a single Exact product
+  in the catalogue: the best available are Partials (leather cocktail tables that aren't gray, other
+  console tables). The filter keeps only products whose name or attributes contain every extracted
+  word, so it drops all of them. Only 4 of 100 results survived for the first query, all of them
+  irrelevant, and 0 of 100 for the second. A ranker that prefers attribute matches can degrade
+  gracefully; a filter cannot. Extraction also reads colours out of brand names: "Kohler
+  Whitehaven" → white, "Palram Harmony greenhouses" → green.
 
 **Takeaway.** Used naively, as a replacement for the query, the LLM is neutral to harmful here.
 What I would try next is spelling correction gated on the catalogue vocabulary (only "correct" a
@@ -225,8 +233,9 @@ Laptop CPU (Intel i7-1255U, WSL2), models warm, 144 test queries ([`latency.json
 - **At 43k products, exact search is as fast as HNSW.** A 43k × 384 matrix product takes ~20 ms.
   The approximate index only pays off with millions of products. Here it only shows that the
   ANN path loses almost nothing (2 queries better, 4 worse, 137 identical).
-- **Feature building, not the model, is the LambdaMART cost.** The Python per-candidate loops
-  take most of the 100 ms. Predicting 100 rows with 625 small trees takes a few ms.
+- **The LambdaMART stage costs 100 ms**, measured as features + prediction together. I did not
+  time the two separately. The feature code is plain Python looping over the 100 candidates, and
+  that is where I would look first.
 - The MiniLM cross-encoder costs ~6× the whole LambdaMART pipeline and was not clearly better. bge-reranker-base takes 2.4 s for just 20 pairs.
 
 ---

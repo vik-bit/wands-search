@@ -246,7 +246,7 @@ cached. Each variant changes only the query side; the first stage is unchanged.
 | rewrite instead of query | −0.010 (p = 0.059) | Rewrites swap the customer's words for "nicer" ones the catalogue doesn't use: "desk for kids" → "desk suitable for children" (0.65 → 0.22) |
 | original + rewrite (fused) | −0.005 (n.s.) | Expansion is safer than replacement, but still not a gain |
 | attribute boost | 0 | Every boost weight > 0 made dev worse, so dev picked 0 |
-| attribute filter | −0.039 (p = 0.002) | Attributes live in descriptions or use other words ("grey", "genuine leather"), so filters remove the right products. Extraction also finds colours inside brand names ("Kohler Whitehaven" → white) |
+| attribute filter | −0.039 (p = 0.002) | The worst cases have **no** Exact product in the catalogue ("olive green console table"). The best available results are Partials that miss one constraint, and a filter on every extracted word removes exactly those (0 of 100 results kept). Extraction also finds colours inside brand names ("Kohler Whitehaven" → white) |
 
 **Why this matters for e-commerce.** A catalogue is full of invented proper nouns (brands,
 collections, product names). A general LLM has never seen most of them, so "unfamiliar" looks like
