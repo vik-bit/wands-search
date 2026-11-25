@@ -1,0 +1,27 @@
+{
+ "queries": "dev+test (240)",
+ "baseline": "hybrid_weighted",
+ "metric": "ndcg@10",
+ "compare": {
+  "rerank_ms-marco-MiniLM-L-6-v2": {
+   "delta": 0.0032142862328649767,
+   "ci_low": -0.0034203407250493604,
+   "ci_high": 0.009508916360627227,
+   "p_value": 0.33806619338066196,
+   "wins": 69,
+   "losses": 46,
+   "ties": 124,
+   "n": 239
+  },
+  "rerank_bge-reranker-base": {
+   "delta": 0.004712744313182533,
+   "ci_low": -0.0021535375820628676,
+   "ci_high": 0.011441698619749365,
+   "p_value": 0.17718228177182282,
+   "wins": 75,
+   "losses": 49,
+   "ties": 115,
+   "n": 239
+  }
+ }
+}
